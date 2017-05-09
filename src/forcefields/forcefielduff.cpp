@@ -146,7 +146,7 @@ namespace OpenBabel {
       // ka already is pre-computed as ka/n^2 to save CPU cycles
       // UNLIKE Rappe paper, we add a penalty for angles close to zero, based on ESFF
       // i.e., if the angle is less than approx theta0, energy goes up exponentially
-      energy = ka * (1 - cos(n*theta)) + exp(-20.0*(theta - theta0 + 0.25));
+      energy = ka * (1 - cos(n*theta));// + exp(-20.0*(theta - theta0 + 0.25));
       break;
     case 7: // IF7 pentagonal -- pentagonal bipyramidal
       /* theta = 1/5 * 2 pi.  cosT = .30901699
