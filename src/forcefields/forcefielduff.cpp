@@ -90,8 +90,8 @@ namespace OpenBabel {
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s  %4.2f%8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n",
-                 (*i).a->GetType(), (*i).b->GetType(),
+        snprintf(_logbuf, BUFF_SIZE, "%-5d %-5d %4.2f %20.12f %20.12f %20.12f %20.12f %20.12f\n",
+                 (*i).a->GetIdx(), (*i).b->GetIdx(),
                  (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -217,8 +217,8 @@ namespace OpenBabel {
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s%8.3f  %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
-                 (*i).c->GetType(), (*i).theta * RAD_TO_DEG, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
+        snprintf(_logbuf, BUFF_SIZE, "%-5d %-5d %-5d %-5d %-5d %20.12f %20.12f %20.12f %20.12f %20.12f %20.12f %20.12f %20.12f\n", (*i).a->GetIdx(), (*i).b->GetIdx(),
+                 (*i).c->GetIdx(), (*i).coord, (*i).n, (*i).c0, (*i).c1, (*i).c2, (*i).theta * RAD_TO_DEG, (*i).theta0 * RAD_TO_DEG, (*i).ka, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -304,9 +304,9 @@ namespace OpenBabel {
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s %-5s%6.3f       %8.3f     %8.3f\n",
-                 (*i).a->GetType(), (*i).b->GetType(),
-                 (*i).c->GetType(), (*i).d->GetType(), (*i).V,
+        snprintf(_logbuf, BUFF_SIZE, "%-5d %-5d %-5d %-5d %-5d %20.12f %20.12f %20.12f %20.12f\n",
+                 (*i).a->GetIdx(), (*i).b->GetIdx(),
+                 (*i).c->GetIdx(), (*i).d->GetIdx(), (*i).n, (*i).V, (*i).cosNPhi0,
                  (*i).tor * RAD_TO_DEG, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -386,8 +386,8 @@ namespace OpenBabel {
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s %-5s%8.3f   %8.3f     %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), (*i).c->GetType(), (*i).d->GetType(),
-                 (*i).angle * RAD_TO_DEG, (*i).koop, (*i).energy);
+        snprintf(_logbuf, BUFF_SIZE, "%-5d %-5d %-5d %-5d %20.12f %20.12f %20.12f %20.12f %20.12f %20.12f\n", (*i).a->GetIdx(), (*i).b->GetIdx(), (*i).c->GetIdx(), (*i).d->GetIdx(),
+                 (*i).angle * RAD_TO_DEG, (*i).koop, (*i).c0, (*i).c1, (*i).c2, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -465,7 +465,13 @@ namespace OpenBabel {
       // Cut-off check
       if (_cutoff)
         if (!_vdwpairs.BitIsSet(j))
+          {
+            IF_OBFF_LOGLVL_HIGH {
+              snprintf(_logbuf, BUFF_SIZE, "Excluding\n");
+              OBFFLog(_logbuf);
+            }
           continue;
+          }
 
       i->template Compute<gradients>();
       energy += i->energy;
@@ -476,8 +482,8 @@ namespace OpenBabel {
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
-                 (*i).rab, (*i).kab, (*i).energy);
+        snprintf(_logbuf, BUFF_SIZE, "%-5d %-5d %20.12f %20.12f %20.12f %20.12f\n", (*i).a->GetIdx(), (*i).b->GetIdx(),
+                 (*i).rab, (*i).ka, (*i).kab, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
